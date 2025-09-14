@@ -1,4 +1,4 @@
-# Flutter-First
+# Lexico
 
 A new Flutter project.
 
