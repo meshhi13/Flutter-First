@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lexico/pages/math.dart';
+import 'package:lexico/pages/memory.dart';
+import 'package:lexico/pages/phrase.dart';
+import 'package:lexico/pages/words.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,12 +13,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.lightBlue[50],
       appBar: appBar(),
-      body: body(),
+      body: body(context),
     );
   }
 
-  // The search bar is now a "Find Lesson" input
-  Widget body() {
+  Widget body(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
       child: Column(
@@ -47,10 +50,10 @@ class HomePage extends StatelessWidget {
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
               children: [
-                lessonCard("Memory Boost", "assets/icons/brain.svg", Colors.orangeAccent),
-                lessonCard("Word Match", "assets/icons/book.svg", Colors.greenAccent),
-                lessonCard("Daily Phrase", "assets/icons/microphone.svg", Colors.purpleAccent),
-                lessonCard("Numbers Fun", "assets/icons/calculator.svg", Colors.redAccent),
+                lessonCard(context, "Memory Boost", "assets/icons/brain.svg", Colors.orangeAccent),
+                lessonCard(context, "Word Match", "assets/icons/book.svg", Colors.greenAccent),
+                lessonCard(context, "Daily Phrase", "assets/icons/microphone.svg", Colors.purpleAccent),
+                lessonCard(context, "Numbers Fun", "assets/icons/calculator.svg", Colors.redAccent),
               ],
             ),
           ),
@@ -59,10 +62,28 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget lessonCard(String title, String iconPath, Color color) {
+  Widget lessonCard(BuildContext context, title, String iconPath, Color color) {
     return GestureDetector(
       onTap: () {
-        // Navigate to lesson page
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (context) {
+              switch (title) {
+                case "Memory Boost":
+                  return MemoryBoostPage();
+                case "Word Match":
+                  return WordMatchPage();
+                case "Daily Phrase":
+                  return DailyPhrasePage();
+                case "Numbers Fun":
+                  return NumbersFunPage();
+                default:
+                  throw UnimplementedError();
+              }
+            },
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -121,7 +142,7 @@ class HomePage extends StatelessWidget {
         alignment: Alignment.center,
         width: 40,
         child: SvgPicture.asset(
-          'assets/icons/Arrow - Left 2.svg',
+          'assets/icons/account.svg',
           height: 24,
           width: 24,
           fit: BoxFit.contain,
